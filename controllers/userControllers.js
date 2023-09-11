@@ -28,6 +28,25 @@ const createUser= async (req, res)=>{
     }
 }
 
+const confirm=async(req, res)=>{
+    const {token}= req.params
+    try{
+        const userConfirm= await User.findOne({token})
+        if (!userConfirm){
+            const error= new Error('token invalido')
+            return res.status(400).json({message: error.message})
+
+        }
+        userConfirm.confirm=true;
+        userConfirm.token='';
+        await userConfirm.save();
+        res.json({message: 'Usuario confirmado correctamente'})
+        
+    }catch(error){
+        console.log(error)
+    }
+}
+
 const authUser= async(req, res)=>{
     const {email, password}=req.body
     try{
@@ -61,24 +80,7 @@ const authUser= async(req, res)=>{
     }
 }
 
-const confirm=async(req, res)=>{
-    const {token}= req.params
-    try{
-        const userConfirm= await User.findOne({token})
-        if (!userConfirm){
-            const error= new Error('token invalido')
-            return res.status(400).json({message: error.message})
 
-        }
-        userConfirm.confirm=true;
-        userConfirm.token='';
-        await userConfirm.save();
-        res.json({message: 'Usuario confirmado correctamente'})
-        
-    }catch(error){
-        console.log(error)
-    }
-}
 
 const forgetPassword=async(req, res)=>{
     const {email}=req.body
