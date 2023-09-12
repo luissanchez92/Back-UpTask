@@ -37,12 +37,11 @@ const getOneProject=async(req,res)=>{
         return res.status(401).json({message: error.message})
     }
 
-    const tasks= await Task.find().where('project').equals(project._id)
+    //const tasks= await Task.find().where('project').equals(project._id)
 
-    res.json({
-        project,
-        tasks
-    })
+    res.json(
+        project
+    )
 }
 
 const edithProject=async(req,res)=>{
