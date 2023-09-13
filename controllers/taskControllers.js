@@ -18,6 +18,9 @@ const addTask=async(req,res)=>{
 
     try{
         const newTaskAdd= await Task.create(req.body);
+        //add id de project
+        existProject.tasks.push(newTaskAdd._id)
+        await existProject.save();
         return res.json(newTaskAdd)
 
     }catch(error){

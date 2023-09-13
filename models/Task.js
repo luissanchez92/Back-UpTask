@@ -24,7 +24,7 @@ const taskSchema= mongoose.Schema({
     priority: {
         type: String,
         required: true,
-        enum: ['Low', 'Medium', 'High']
+        enum: ['Baja', 'Media', 'Alta']
     },
     project: {
         type: mongoose.Schema.Types.ObjectId,
