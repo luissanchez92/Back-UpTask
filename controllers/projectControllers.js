@@ -25,7 +25,7 @@ const newProject=async(req,res)=>{
 
 const getOneProject=async(req,res)=>{
     const {id}= req.params
-    const project= await Project.findById(id)
+    const project= await Project.findById(id).populate('tasks')
 
     if(!project){
         const error= new Error('Project not found')
