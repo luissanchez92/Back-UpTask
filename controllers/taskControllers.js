@@ -17,9 +17,10 @@ const addTask=async(req,res)=>{
     }
 
     try{
+        //TODO ?
         const newTaskAdd= await Task.create(req.body);
         //add id de project
-        existProject.tasks.push(newTaskAdd._id)
+        existProject.tasks?.push(newTaskAdd._id)
         await existProject.save();
         return res.json(newTaskAdd)
 
@@ -82,7 +83,7 @@ const deleteTask=async(req,res)=>{
     const task= await Task.findById(id).populate('project')
 
     if(!task){
-        const error= new Error('task not found')
+        const error= new Error('No existe la Tarea')
         return res.status(404).json({error: error.message})
     }
     if (task.project.author.toString() !== req.user._id.toString() ){
@@ -91,7 +92,7 @@ const deleteTask=async(req,res)=>{
     }
     try{
         await task.deleteOne()
-        res.json({message: 'Deleted task'})
+        res.json({message: 'La tarea fue eliminada'})
 
     }catch(error){
         console.log(error)
