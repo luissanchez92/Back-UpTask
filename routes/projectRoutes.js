@@ -1,4 +1,4 @@
-import { getProjects, newProject, getOneProject, edithProject, deleteProject, addCollaborator, deleteOneCollaborator} from '../controllers/projectControllers.js'
+import { getProjects, newProject, getOneProject, edithProject, deleteProject, findCollaborator, addCollaborator, deleteOneCollaborator} from '../controllers/projectControllers.js'
 import checkAuth from '../middleware/checkAuth.js'
 import express from 'express'
 
@@ -9,7 +9,8 @@ projectRouter.post('/', checkAuth, newProject)
 projectRouter.get('/:id', checkAuth, getOneProject)
 projectRouter.put('/:id', checkAuth, edithProject)
 projectRouter.delete('/:id', checkAuth, deleteProject)
-projectRouter.post('/add/collaborator/:id', checkAuth, addCollaborator)
-projectRouter.post('/delete/collaborator/:id', checkAuth, deleteOneCollaborator)
+projectRouter.post('/collaborator', checkAuth, findCollaborator)
+projectRouter.post('/collaborator/:id', checkAuth, addCollaborator)
+projectRouter.post('/collaborator/delete/:id', checkAuth, deleteOneCollaborator)
 
 export default projectRouter;
