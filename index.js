@@ -64,12 +64,12 @@ io.on('connection', (Socket)=>{
 
     Socket.on('newTask', (data)=>{
         const project=data.project
-
+       
         if (typeof project==='string'){
-            Socket.on(project).emit('addedTask', task)
+            Socket.to(project).emit('addedTask', data);
         }else if(typeof project==='object'){
-            Socket.on(project._id).emit('addedTask', task)
-        }
+            Socket.to(project._id).emit('addedTask', data);
+        };
     })
 
 
@@ -81,6 +81,16 @@ io.on('connection', (Socket)=>{
         } else if (typeof projectValue === 'object') {
             Socket.to(projectValue._id).emit('taskDeleted', task)
         }
+    })
+
+    Socket.on('updateTask', (data)=>{
+        const project=data.project._id
+        Socket.to(project).emit('taskUpdate', data);
+    })
+
+    Socket.on('changeState', (data)=>{
+        const project= data.project._id
+        Socket.to(project).emit('stateChanged', data)
     })
 
 
